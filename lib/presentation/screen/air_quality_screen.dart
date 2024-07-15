@@ -13,51 +13,38 @@ class AirQualityScreen extends ConsumerWidget {
     final airQualityInfoState = ref.watch(airQualityViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 24),
+        ),
+        centerTitle: true, // AppBar의 제목을 가운데 정렬
+      ),
       body: airQualityInfoState.when(
         data: (airQualityData) {
-          final int totalItems = airQualityData.todayInfo.length +
-              airQualityData.forecastsInfo.length;
-          return ListView.builder(
-            itemCount: totalItems,
-            itemBuilder: (context, index) {
-              if (index < airQualityData.todayInfo.length) {
-                final airQualityTodayInfo = airQualityData.todayInfo[index];
-                return ListTile(
-                  title: Text('Region: ${airQualityTodayInfo.region}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('PM10: ${airQualityTodayInfo
-                          .pm10Value}, Status: ${airQualityTodayInfo
-                          .pm10Status}'),
-                      Text('PM2.5: ${airQualityTodayInfo
-                          .pm25Value}, Status: ${airQualityTodayInfo
-                          .pm25Status}'),
-                      Text('Last Updated: ${airQualityTodayInfo.lastUpdated}'),
-                    ],
-                  ),
-                );
-              } else {
-                // forecastsInfo의 인덱스 계산
-                final int forecastIndex = index -
-                    airQualityData.todayInfo.length;
-                final airQualityForecastInfo = airQualityData
-                    .forecastsInfo[forecastIndex];
-                return ListTile(
-                  title: Text(
-                      'Forecast Region: ${airQualityForecastInfo.region}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('region: ${airQualityForecastInfo.grade}'),
-                      Text('grade: ${airQualityForecastInfo.grade}'),
-                      Text('Date: ${airQualityForecastInfo.date}'),
-                    ],
-                  ),
-                );
-              }
-            },
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      size: 24,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      airQualityData.address.streetAddress,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
