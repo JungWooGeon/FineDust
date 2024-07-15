@@ -1,5 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final apiUrlProvider = Provider<String>((ref) {
+final airQualityTodayUrlProvider = Provider<String>((ref) {
   throw UnimplementedError();
+});
+
+final airQualityForecastsUrlProvider = Provider<String>((ref) {
+    throw UnimplementedError();
 });

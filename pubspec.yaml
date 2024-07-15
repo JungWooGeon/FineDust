@@ -45,6 +45,13 @@ dependencies:
   # settings.gradle
   flutter_dotenv: ^5.1.0
 
+  geolocator: ^12.0.0
+
+  app_settings: ^5.1.1
+
+  fluttertoast: ^8.2.6
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
