@@ -1,4 +1,4 @@
-import 'package:fine_dust/presentation/screen/air_quality_screen.dart';
+import 'package:fine_dust/presentation/view/screen/air_quality_screen.dart';
 import 'package:fine_dust/provider/api_url_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
