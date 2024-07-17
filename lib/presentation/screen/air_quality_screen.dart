@@ -1,3 +1,4 @@
+import 'package:fine_dust/presentation/widget/lottie_air_quality_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../viewmodel/air_quality_viewmodel.dart';
@@ -18,7 +19,7 @@ class AirQualityScreen extends ConsumerWidget {
           title,
           style: const TextStyle(fontSize: 24),
         ),
-        centerTitle: true, // AppBar의 제목을 가운데 정렬
+        centerTitle: true,
       ),
       body: airQualityInfoState.when(
         data: (airQualityData) {
@@ -44,6 +45,8 @@ class AirQualityScreen extends ConsumerWidget {
                   ],
                 ),
               ),
+              const SizedBox(width: 10, height: 10),
+              LottieAirQualityStatusWidget(status: airQualityData.todayInfo.status)
             ],
           );
         },

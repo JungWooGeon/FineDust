@@ -1,3 +1,4 @@
+import '../entity/address.dart';
 import '../entity/air_quality_today_info.dart';
 import '../repository/air_quality_repository.dart';
 
@@ -6,7 +7,7 @@ class GetAirQualityTodayUseCase {
 
   GetAirQualityTodayUseCase(this._airQualityRepository);
 
-  Future<List<AirQualityTodayInfo>> execute() async {
-    return await _airQualityRepository.getAirQualityToday();
+  Future<AirQualityTodayInfo> execute(Address address) async {
+    return await _airQualityRepository.getAirQualityToday(address);
   }
 }

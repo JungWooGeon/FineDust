@@ -5,6 +5,7 @@ class AirQualityTodayInfo {
   final String pm25Value;
   final String pm25Status;
   final String lastUpdated;
+  String status = "";
 
   AirQualityTodayInfo({
     required this.region,
@@ -12,6 +13,10 @@ class AirQualityTodayInfo {
     required this.pm10Status,
     required this.pm25Value,
     required this.pm25Status,
-    required this.lastUpdated,
+    required this.lastUpdated
   });
+
+  applyStatus(String status) {
+    this.status = status;
+  }
 }

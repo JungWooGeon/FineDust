@@ -9,9 +9,9 @@ class LocationRepositoryImpl implements LocationRepository {
 
   @override
   Future getAddress() async {
-    final locality = await locationService.getLocality() ?? "서울";
-    final address = await locationService.getAddress() ?? locality;
+    final address = await locationService.getAddress();
+    final administrativeArea = await locationService.getAdministrativeArea() ?? "서울특별시";
 
-    return Address(streetAddress: address, locality: locality);
+    return Address(streetAddress: address ?? "서울시 강남구", administrativeArea: administrativeArea);
   }
 }

@@ -1,9 +1,9 @@
 class Address {
   final String streetAddress;
-  final String locality;
+  final String administrativeArea;
 
   Address({
     required this.streetAddress,
-    required this.locality,
+    required this.administrativeArea,
   });
 }

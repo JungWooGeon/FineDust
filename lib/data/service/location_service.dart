@@ -21,11 +21,11 @@ class LocationService {
     return _place?.street;
   }
 
-  Future<String?> getLocality() async {
-    if (_place?.locality != null || _place?.locality != "") {
-      return _place?.locality;
-    } else {
+  Future<String?> getAdministrativeArea() async {
+    if (_place?.administrativeArea != null || _place?.administrativeArea != "") {
       return _place?.administrativeArea;
+    } else {
+      return _place?.subAdministrativeArea;
     }
   }
 }

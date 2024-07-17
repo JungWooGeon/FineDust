@@ -1,24 +1,37 @@
+import '../../domain/entity/address.dart';
+import '../../domain/entity/air_quality_forecasts_info.dart';
 import '../../domain/entity/air_quality_today_info.dart';
 import '../../domain/repository/air_quality_repository.dart';
 import '../mapper/air_quality_forecasts_info_mapper.dart';
 import '../mapper/air_quality_today_info_mapper.dart';
 import '../service/air_quality_forcasts_service.dart';
 import '../service/air_quality_today_service.dart';
+import '../util/air_quality_util.dart';
 
 class AirQualityRepositoryImpl implements AirQualityRepository {
   final AirQualityTodayService airQualityTodayService;
   final AirQualityForecastsService airQualityForecastsService;
+  final AirQualityUtil airQualityUtil;
 
-  AirQualityRepositoryImpl(this.airQualityTodayService, this.airQualityForecastsService);
+  AirQualityRepositoryImpl(this.airQualityTodayService, this.airQualityForecastsService, this.airQualityUtil);
 
   @override
-  Future<List<AirQualityTodayInfo>> getAirQualityToday() async {
+  Future<AirQualityTodayInfo> getAirQualityToday(Address address) async {
     final response = await airQualityTodayService.getAirQualityToday();
-    return response.map((json) => AirQualityTodayInfoMapper.fromJson(json)).toList();
+    final airQualityTodayList =  response.map((json) => AirQualityTodayInfoMapper.fromJson(json)).toList();
+
+    // 전체 내용 중 현재 지역 내용 추출
+    final airQualityToday = airQualityUtil.extractTodayAirQualityFromAddress(airQualityTodayList, address);
+
+    // 미세먼지와 초미세먼지 농도 중 낮은 상황 추출 후 적용
+    final status = airQualityUtil.extractAirQualityStatusFromAirQualityToday(airQualityToday);
+    airQualityToday.applyStatus(status);
+
+    return airQualityToday;
   }
 
   @override
-  Future getAirQualityForecasts() async {
+  Future<List<AirQualityForecastsInfo>> getAirQualityForecasts() async {
     final response = await airQualityForecastsService.getAirQualityForecasts();
     return response.map((json) => AirQualityForecastsInfoMapper.fromJson(json)).toList();
   }
