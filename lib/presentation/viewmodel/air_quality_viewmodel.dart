@@ -40,7 +40,7 @@ class AirQualityViewModel extends StateNotifier<AsyncValue<AirQualityData>> {
   Future<void> getAirQualityInfo(Address address) async {
     try {
       final airQualityTodayInfo = await _getAirQualityTodayUseCase.execute(address);
-      final airQualityForecastsInfo = await _getAirQualityForecastsUseCase.execute();
+      final airQualityForecastsInfo = await _getAirQualityForecastsUseCase.execute(airQualityTodayInfo.region);
       state = AsyncValue.data(AirQualityData(todayInfo: airQualityTodayInfo, forecastsInfo: airQualityForecastsInfo, address: address));
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);

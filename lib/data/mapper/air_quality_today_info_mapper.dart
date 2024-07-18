@@ -9,6 +9,10 @@ class AirQualityTodayInfoMapper {
       pm25Value: json['pm25_value'].toStringAsFixed(2),
       pm25Status: json['pm25_status'] as String,
       lastUpdated: json['last_updated'] as String,
+      so2Value: json['so2Value'].toStringAsFixed(2),
+      coValue: json['coValue'].toStringAsFixed(2),
+      o3Value: json['o3Value'].toStringAsFixed(2),
+      no2Value: json['no2Value'].toStringAsFixed(2)
     );
   }
 
@@ -20,6 +24,10 @@ class AirQualityTodayInfoMapper {
       'pm25_value': airQualityTodayInfo.pm25Value,
       'pm25_status': airQualityTodayInfo.pm25Status,
       'last_updated': airQualityTodayInfo.lastUpdated,
+      'so2Value': airQualityTodayInfo.so2Value,
+      'coValue': airQualityTodayInfo.coValue,
+      'o3Value': airQualityTodayInfo.o3Value,
+      'no2Value': airQualityTodayInfo.no2Value
     };
   }
 }

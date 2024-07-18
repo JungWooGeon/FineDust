@@ -1,9 +1,12 @@
+import 'package:fine_dust/presentation/view/screen/air_quality_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../viewmodel/air_quality_viewmodel.dart';
 import '../widget/air_quality_bar_chart_widget.dart';
-import '../widget/dashed_line_painter_widget.dart';
+import '../widget/dotted_line_widget.dart';
+import '../widget/location_widget.dart';
 import '../widget/lottie_air_quality_status_widget.dart';
+import '../widget/row_air_quality_forecast_widget.dart';
 
 class AirQualityScreen extends ConsumerWidget {
 
@@ -28,49 +31,45 @@ class AirQualityScreen extends ConsumerWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.location_on,
-                      size: 24,
-                      color: Colors.black,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      airQualityData.address.streetAddress,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                  ],
+              LocationWidget(
+                  streetAddress: airQualityData.address.streetAddress
+              ),
+
+              const SizedBox(width: 10, height: 10),
+
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AirQualityDetailScreen(title: title, airQualityData: airQualityData)),
+                  );
+                },
+                child: LottieAirQualityStatusWidget(
+                  status: airQualityData.todayInfo.status,
+                  width: 250,
+                  height: 250,
                 ),
               ),
-              const SizedBox(width: 10, height: 10),
-              LottieAirQualityStatusWidget(status: airQualityData.todayInfo.status),
+
               Text(
                 airQualityData.todayInfo.status,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 30, right: 30),
-                child: SizedBox(
-                  height: 100,
-                  child:  AirQualityBarChart(),
-                )
+
+              const SizedBox(height: 10),
+
+              AirQualityBarChartWidget(
+                pm10Value: airQualityData.todayInfo.pm10Value,
+                pm25Value: airQualityData.todayInfo.pm25Value,
+                status: airQualityData.todayInfo.status,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 1, // 점선의 높이
-                  child: CustomPaint(
-                    painter: DashedLinePainter(),
-                  ),
-                )
-              )
+
+              const DottedLineWidget(),
+
+              const SizedBox(height: 20),
+
+              RowAirQualityForecastWidget(airQualityData: airQualityData)
             ],
           );
         },

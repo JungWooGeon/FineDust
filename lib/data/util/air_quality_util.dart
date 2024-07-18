@@ -1,3 +1,5 @@
+import 'package:fine_dust/domain/entity/air_quality_forecasts_info.dart';
+
 import '../../domain/entity/address.dart';
 import '../../domain/entity/air_quality_today_info.dart';
 
@@ -85,4 +87,16 @@ class AirQualityUtil {
         return "서울";
     }
   }
-}
+
+  List<AirQualityForecastsInfo> extractForecastAirQualityFromRegion(List<AirQualityForecastsInfo> airQualityForecastList, String region) {
+    List<AirQualityForecastsInfo> resultList = [];
+
+    for (final airQualityForecast in airQualityForecastList) {
+      if (airQualityForecast.region == region || (region == "경기" && airQualityForecast.region == "경기남부")) {
+        resultList.add(airQualityForecast);
+      }
+    }
+
+    return resultList;
+  }
+ }

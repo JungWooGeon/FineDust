@@ -1,4 +1,5 @@
 import 'package:fine_dust/presentation/view/screen/air_quality_screen.dart';
+import 'package:fine_dust/presentation/view/screen/home_screen.dart';
 import 'package:fine_dust/provider/api_url_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AirQualityScreen(title: '미세 알리미'),
+      home: const HomeScreen(),
     );
   }
 }

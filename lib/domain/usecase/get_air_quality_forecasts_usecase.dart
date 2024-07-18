@@ -7,7 +7,7 @@ class GetAirQualityForecastsUseCase {
 
   GetAirQualityForecastsUseCase(this._airQualityRepository);
 
-  Future<List<AirQualityForecastsInfo>> execute() async {
-    return await _airQualityRepository.getAirQualityForecasts();
+  Future<List<AirQualityForecastsInfo>> execute(String region) async {
+    return await _airQualityRepository.getAirQualityForecasts(region);
   }
 }

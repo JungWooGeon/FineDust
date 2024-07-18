@@ -20,7 +20,7 @@ class AirQualityRepositoryImpl implements AirQualityRepository {
     final response = await airQualityTodayService.getAirQualityToday();
     final airQualityTodayList =  response.map((json) => AirQualityTodayInfoMapper.fromJson(json)).toList();
 
-    // 전체 내용 중 현재 지역 내용 추출
+    // 전체 오늘 미세먼지 내용 중 현재 지역 내용 추출
     final airQualityToday = airQualityUtil.extractTodayAirQualityFromAddress(airQualityTodayList, address);
 
     // 미세먼지와 초미세먼지 농도 중 낮은 상황 추출 후 적용
@@ -31,8 +31,13 @@ class AirQualityRepositoryImpl implements AirQualityRepository {
   }
 
   @override
-  Future<List<AirQualityForecastsInfo>> getAirQualityForecasts() async {
+  Future<List<AirQualityForecastsInfo>> getAirQualityForecasts(String region) async {
     final response = await airQualityForecastsService.getAirQualityForecasts();
-    return response.map((json) => AirQualityForecastsInfoMapper.fromJson(json)).toList();
+    final airQualityForecastList = response.map((json) => AirQualityForecastsInfoMapper.fromJson(json)).toList();
+
+    // 전체 미세먼지 예보 내용 중 현재 지역 내용 추출
+    final resultForecastList = airQualityUtil.extractForecastAirQualityFromRegion(airQualityForecastList, region);
+
+    return resultForecastList;
   }
 }
