@@ -1,45 +1,55 @@
 import 'package:fine_dust/presentation/view/screen/setting_screen.dart';
 import 'package:fine_dust/presentation/view/screen/weather_screen.dart';
+import 'package:fine_dust/presentation/viewmodel/home_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'air_quality_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeDataAsyncValue = ref.watch(homeViewModelProvider);
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+    return homeDataAsyncValue.when(
+      data: (homeData) {
+        final currentIndex = homeData.currentIndex;
+        final address = homeData.address;
 
-  final List<Widget> _screens = [
-    const AirQualityScreen(title: '미세 알리미'),
-    const WeatherScreen(title: '미세 알리미'),
-    const SettingScreen(title: '미세 알리미')
-  ];
+        final List<Widget> screens = [
+          AirQualityScreen(title: '미세 알리미', address: address),
+          WeatherScreen(title: '미세 알리미', address: address),
+          const SettingScreen(title: '설정')
+        ];
 
-  void _onTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTap,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.cloud_rounded, size: 16), label: "미세먼지"),
-          BottomNavigationBarItem(icon: Icon(Icons.sunny, size: 16), label: "날씨"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings, size: 16), label: "설정"),
-        ],
-        selectedItemColor: Colors.blueAccent,
+        return Scaffold(
+          body: screens[currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (index) {
+              ref.read(homeViewModelProvider.notifier).updateIndex(index);
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.cloud_rounded), label: "미세먼지"),
+              BottomNavigationBarItem(icon: Icon(Icons.sunny), label: "날씨"),
+              BottomNavigationBarItem(icon: Icon(Icons.settings), label: "설정"),
+            ],
+            selectedItemColor: Colors.blueAccent,
+          ),
+        );
+      },
+      loading: () => const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+      error: (error, _) => Scaffold(
+        body: Center(
+          child: Text('Error: $error'),
+        ),
       ),
     );
   }

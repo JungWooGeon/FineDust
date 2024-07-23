@@ -28,4 +28,8 @@ class LocationService {
       return _place?.subAdministrativeArea;
     }
   }
+
+  Future<Position> getCurrentCoordinates() async {
+    return await _geolocatorPlatform.getCurrentPosition();
+  }
 }

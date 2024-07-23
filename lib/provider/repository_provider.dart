@@ -17,5 +17,7 @@ final airQualityRepositoryProvider = Provider<AirQualityRepository>((ref) {
 
 final locationRepositoryProvider = Provider<LocationRepository>((ref) {
   final locationService = ref.watch(locationServiceProvider);
-  return LocationRepositoryImpl(locationService);
+  final locationConvertUtil = ref.watch(locationConvertUtilProvider);
+
+  return LocationRepositoryImpl(locationService, locationConvertUtil);
 });

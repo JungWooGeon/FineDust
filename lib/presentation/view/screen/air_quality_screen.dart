@@ -1,6 +1,7 @@
 import 'package:fine_dust/presentation/view/screen/air_quality_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../domain/entity/address.dart';
 import '../../viewmodel/air_quality_viewmodel.dart';
 import '../widget/air_quality_bar_chart_widget.dart';
 import '../widget/dotted_line_widget.dart';
@@ -11,12 +12,13 @@ import '../widget/row_air_quality_forecast_widget.dart';
 class AirQualityScreen extends ConsumerWidget {
 
   final String title;
+  final Address address;
 
-  const AirQualityScreen({super.key, required this.title});
+  const AirQualityScreen({super.key, required this.title, required this.address});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final airQualityInfoState = ref.watch(airQualityViewModelProvider);
+    final airQualityInfoState = ref.watch(airQualityViewModelProvider(address));
 
     return Scaffold(
       appBar: AppBar(

@@ -4,33 +4,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../domain/usecase/get_address_usecase.dart';
 import '../../domain/usecase/get_air_quality_forecasts_usecase.dart';
 import '../../domain/usecase/get_air_quality_today_usecase.dart';
 import '../../provider/usecase_provider.dart';
 import '../model/air_quality_data.dart';
 
-final airQualityViewModelProvider = StateNotifierProvider<AirQualityViewModel, AsyncValue<AirQualityData>>((ref) {
+final airQualityViewModelProvider = StateNotifierProvider.family<AirQualityViewModel, AsyncValue<AirQualityData>, Address>((ref, address) {
   final getAirQualityTodayUseCase = ref.watch(getAirQualityTodayUseCaseProvider);
   final getAirQualityForecastsUseCase = ref.watch(getAirQualityForecastsUseCaseProvider);
-  final getAddressUsecase = ref.watch(getAddressUsecaseProvider);
   
-  return AirQualityViewModel(getAirQualityTodayUseCase, getAirQualityForecastsUseCase, getAddressUsecase);
+  return AirQualityViewModel(getAirQualityTodayUseCase, getAirQualityForecastsUseCase, address);
 });
 
 class AirQualityViewModel extends StateNotifier<AsyncValue<AirQualityData>> {
   final GetAirQualityTodayUseCase _getAirQualityTodayUseCase;
   final GetAirQualityForecastsUseCase _getAirQualityForecastsUseCase;
-  final GetAddressUsecase _getAddressUsecase;
+  final Address _address;
 
-  AirQualityViewModel(this._getAirQualityTodayUseCase, this._getAirQualityForecastsUseCase, this._getAddressUsecase) : super(const AsyncValue.loading()) {
+  AirQualityViewModel(this._getAirQualityTodayUseCase, this._getAirQualityForecastsUseCase, this._address) : super(const AsyncValue.loading()) {
     _init();
   }
 
   Future<void> _init() async {
     if (await requestLocationPermission()) {
-      final address = await _getAddressUsecase.execute();
-      getAirQualityInfo(address);
+      getAirQualityInfo(_address);
     } else {
       Fluttertoast.showToast(msg: "위치 권한이 필요합니다. 설정에서 권한을 허용해주세요.");
       AppSettings.openAppSettings();
