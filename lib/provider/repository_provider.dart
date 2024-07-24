@@ -1,5 +1,7 @@
 import 'package:fine_dust/data/repository/location_repository_impl.dart';
+import 'package:fine_dust/data/repository/weather_forecasts_repository_impl.dart';
 import 'package:fine_dust/domain/repository/location_repository.dart';
+import 'package:fine_dust/domain/repository/weather_forecasts_repository.dart';
 import 'package:fine_dust/provider/service_provider.dart';
 import 'package:fine_dust/provider/util_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,4 +22,11 @@ final locationRepositoryProvider = Provider<LocationRepository>((ref) {
   final locationConvertUtil = ref.watch(locationConvertUtilProvider);
 
   return LocationRepositoryImpl(locationService, locationConvertUtil);
+});
+
+final weatherForecastsRepositoryProvider = Provider<WeatherForecastsRepository>((ref) {
+  final weatherForecastsService = ref.watch(weatherForecastsServiceProvider);
+  final dateTimeService = ref.watch(dateTimeServiceProvider);
+
+  return WeatherForecastsRepositoryImpl(weatherForecastsService, dateTimeService);
 });

@@ -6,10 +6,17 @@ import 'api_url_provider.dart';
 
 final airQualityTodayDioClientProvider = Provider<DioClient>((ref) {
   final apiUrl = ref.watch(airQualityTodayUrlProvider);
-  return DioClient(apiUrl);
+  return DioClient(apiUrl, "");
 });
 
 final airQualityForecastDioClientProvider = Provider<DioClient>((ref) {
   final apiUrl = ref.watch(airQualityForecastsUrlProvider);
-  return DioClient(apiUrl);
+  return DioClient(apiUrl, "");
+});
+
+final weatherForecastsDioClientProvider = Provider<DioClient>((ref) {
+  final apiUrl = ref.watch(weatherForecastsUrlProvider);
+  final serviceKey = ref.watch(serviceKeyProvider);
+
+  return DioClient(apiUrl, serviceKey);
 });

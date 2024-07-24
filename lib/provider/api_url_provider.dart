@@ -5,5 +5,13 @@ final airQualityTodayUrlProvider = Provider<String>((ref) {
 });
 
 final airQualityForecastsUrlProvider = Provider<String>((ref) {
-    throw UnimplementedError();
+  throw UnimplementedError();
+});
+
+final weatherForecastsUrlProvider = Provider<String>((ref) {
+  throw UnimplementedError();
+});
+
+final serviceKeyProvider = Provider<String>((ref) {
+  throw UnimplementedError();
 });

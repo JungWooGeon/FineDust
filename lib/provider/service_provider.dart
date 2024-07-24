@@ -1,4 +1,6 @@
+import 'package:fine_dust/data/service/date_time_service.dart';
 import 'package:fine_dust/data/service/location_service.dart';
+import 'package:fine_dust/data/service/weather_forecasts_service.dart';
 import 'package:fine_dust/provider/geolocator_platform_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,4 +20,13 @@ final airQualityForecastsServiceProvider = Provider<AirQualityForecastsService>(
 
 final locationServiceProvider = Provider<LocationService>((ref) {
   return LocationService(ref.watch(geolocatorPlatformProvider));
+});
+
+final weatherForecastsServiceProvider = Provider<WeatherForecastsService>((ref) {
+  final dioClient = ref.watch(weatherForecastsDioClientProvider);
+  return WeatherForecastsService(dioClient);
+});
+
+final dateTimeServiceProvider = Provider<DateTimeService>((ref) {
+  return DateTimeService();
 });

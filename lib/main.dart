@@ -1,4 +1,3 @@
-import 'package:fine_dust/presentation/view/screen/air_quality_screen.dart';
 import 'package:fine_dust/presentation/view/screen/home_screen.dart';
 import 'package:fine_dust/provider/api_url_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,9 @@ void main() async {
     ProviderScope(
       overrides: [
         airQualityTodayUrlProvider.overrideWithValue(dotenv.env['AIR_QUALITY_TODAY_URL']!),
-        airQualityForecastsUrlProvider.overrideWithValue(dotenv.env['AIR_QUALITY_FORECASTS_URL']!)
+        airQualityForecastsUrlProvider.overrideWithValue(dotenv.env['AIR_QUALITY_FORECASTS_URL']!),
+        weatherForecastsUrlProvider.overrideWithValue(dotenv.env['WEATHER_FORECASTS_URL']!),
+        serviceKeyProvider.overrideWithValue(dotenv.env['SERVICE_KEY']!)
       ],
       child: const MyApp(),
     ),
