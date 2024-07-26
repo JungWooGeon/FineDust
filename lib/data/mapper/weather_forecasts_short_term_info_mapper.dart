@@ -1,4 +1,4 @@
-import 'package:fine_dust/domain/entity/weather_forecasts_short_term_info.dart';
+import 'package:fine_dust/data/dto/weather_forecasts_short_term_info.dart';
 
 class WeatherForecastsShortTermInfoMapper {
   static WeatherForecastsShortTermInfo fromJson(dynamic json) {

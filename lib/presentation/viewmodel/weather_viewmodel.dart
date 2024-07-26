@@ -18,7 +18,7 @@ class WeatherViewModel extends StateNotifier<AsyncValue<WeatherData>> {
   }
 
   Future<void> _init(address) async {
-    final weatherForecastsShortTermInfo = await getWeatherForecastsShortTermUsecase.execute(address);
-    state = AsyncValue.data(WeatherData());
+    final forecastDateList = await getWeatherForecastsShortTermUsecase.execute(address);
+    state = AsyncValue.data(WeatherData([], forecastDateList));
   }
 }

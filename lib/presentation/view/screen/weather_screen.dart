@@ -24,7 +24,16 @@ class WeatherScreen extends ConsumerWidget {
         ),
         centerTitle: true,
       ),
-      body: Text("x: ${address.x} y: ${address.y}")
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("x: ${address.x} y: ${address.y}"),
+          Text("${weatherInfoState.value?.forecastDate.first.date}"),
+          Text("${weatherInfoState.value?.forecastDate.first.time}"),
+          Text("${weatherInfoState.value?.forecastDate.first.weather}"),
+          Text("${weatherInfoState.value?.forecastDate.first.temperature}"),
+        ],
+      )
     );
   }
 }

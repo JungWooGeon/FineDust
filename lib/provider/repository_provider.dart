@@ -27,6 +27,9 @@ final locationRepositoryProvider = Provider<LocationRepository>((ref) {
 final weatherForecastsRepositoryProvider = Provider<WeatherForecastsRepository>((ref) {
   final weatherForecastsService = ref.watch(weatherForecastsServiceProvider);
   final dateTimeService = ref.watch(dateTimeServiceProvider);
+  final localStorageService = ref.watch(localStorageServiceProvider);
+  final databaseService = ref.watch(databaseServiceProvider);
+  final dateTimeUtil = ref.watch(dateTimeUtilProvider);
 
-  return WeatherForecastsRepositoryImpl(weatherForecastsService, dateTimeService);
+  return WeatherForecastsRepositoryImpl(weatherForecastsService, dateTimeService, localStorageService, databaseService, dateTimeUtil);
 });
